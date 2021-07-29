@@ -24,14 +24,17 @@ jobs:
         run: |
           : Setup imageTag, appVersion and dockerFile envs and build image
           APP_VERSION=${GITHUB_REF#refs/heads/}-${GITHUB_SHA::8}-$(date +'%Y.%m.%d_%H:%M:%S')
-          FINAL_IMAGE_NAME="${IMAGE_REPO}:latest"
-
+          TAG = $(date +'%Y.%m.%d_%H:%M:%S')
+          FINAL_IMAGE_NAME="teletracking/shell-operator:latest"
+          FINAL_IMAGE_NAME_TAG="teletracking/shell-operator:${TAG}"
+          echo "FINAL_IMAGE_NAME_TAG=${FINAL_IMAGE_NAME_TAG}" >> ${GITHUB_ENV}
           echo "FINAL_IMAGE_NAME=${FINAL_IMAGE_NAME}" >> ${GITHUB_ENV}
           echo "APP_VERSION=${APP_VERSION}" >> ${GITHUB_ENV}
 
           echo "========================================="
           echo "APP_VERSION        = $APP_VERSION"
           echo "FINAL_IMAGE_NAME   = $FINAL_IMAGE_NAME"
+          echo "FINAL_IMAGE_NAME_TAG = $FINAL_IMAGE_NAME_TAG"
           echo "========================================="
 
       - name: Set up QEMU
@@ -57,4 +60,5 @@ jobs:
           docker buildx build --push \
               --platform $BUILDX_PLATFORMS \
               --build-arg appVersion=$APP_VERSION \
-              --tag $FINAL_IMAGE_NAME .
+              --tag $FINAL_IMAGE_NAME \
+              --tag $FINAL_IMAGE_NAME_TAG .
