@@ -24,7 +24,7 @@ jobs:
         run: |
           : Setup imageTag, appVersion and dockerFile envs and build image
           APP_VERSION=${GITHUB_REF#refs/heads/}-${GITHUB_SHA::8}-$(date +'%Y.%m.%d_%H:%M:%S')
-          IMAGE_TAG="$(date +'%Y.%m.%d_%H:%M:%S')"
+          IMAGE_TAG="$(date +'%Y.%m.%d_%H_%M_%S')"
           FINAL_IMAGE_NAME="teletracking/shell-operator:latest"
           FINAL_IMAGE_NAME_TAG="teletracking/shell-operator:${IMAGE_TAG}"
           echo "FINAL_IMAGE_NAME_TAG=${FINAL_IMAGE_NAME_TAG}" >> ${GITHUB_ENV}
