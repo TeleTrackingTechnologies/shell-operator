@@ -60,5 +60,5 @@ jobs:
           docker buildx build --push \
               --platform $BUILDX_PLATFORMS \
               --build-arg appVersion=$APP_VERSION \
-              --tag $FINAL_IMAGE_NAME \
-              --tag $FINAL_IMAGE_NAME_TAG .
+              -t $FINAL_IMAGE_NAME \
+              -t $FINAL_IMAGE_NAME_TAG .
